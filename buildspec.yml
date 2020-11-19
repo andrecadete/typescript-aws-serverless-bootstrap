@@ -1,7 +1,6 @@
 version: 0.2
 
 env:
-  shell: shell-tag
   variables:
     ARTIFACT_S3_BUCKET: "example-bucket"
 

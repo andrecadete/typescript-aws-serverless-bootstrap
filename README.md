@@ -1,4 +1,4 @@
-# AWS Serverless typescript boostrap
+# AWS Serverless typescript bootstrap
 
 
 This project contains an example of a multi-function typescript AWS serverless stack. <br />

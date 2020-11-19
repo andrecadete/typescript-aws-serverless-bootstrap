@@ -5,12 +5,23 @@ Description: >
 
   Sample SAM Template for helloWorld
 
+Parameters:
+  Stage:
+    Type: String
+    Default: v1
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
 
 Resources:
+
+  ApiGateway:
+    Type: AWS::Serverless::Api
+      Properties:
+        StageName: !Ref Stage
+
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -23,6 +34,7 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+            RestApiId: !Ref ApiGateway
 
   CheckIpFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -31,11 +43,12 @@ Resources:
       Handler: index.handler
       Runtime: nodejs12.x
       Events:
-        HelloWorld:
+        CheckIp:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /checkIp
             Method: get
+            RestApiId: !Ref ApiGateway
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -43,7 +56,7 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/v1/"
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn

@@ -18,10 +18,10 @@ Globals:
 Resources:
 
   ApiGateway:
-    Type: AWS::Serverless::Api
+    Type: AWS::Serverless::HttpApi
     Properties:
       StageName: !Ref Stage
-      Cors:
+      CorsConfiguration:
         AllowMethods: "'GET'"
         AllowHeaders: "'X-Id-Token, Authorization'"
         AllowOrigin: "'*'"
@@ -35,7 +35,7 @@ Resources:
       Runtime: nodejs12.x
       Events:
         HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: HttpApi
           Properties:
             Path: /hello
             Method: get
@@ -49,7 +49,7 @@ Resources:
       Runtime: nodejs12.x
       Events:
         CheckIp:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: HttpApi
           Properties:
             Path: /checkIp
             Method: get

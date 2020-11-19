@@ -10,5 +10,6 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
-  base-directory: 'helloWorldExample/build'
+    - 'build/**/*'
+    - template.yaml
+  base-directory: 'helloWorldExample'

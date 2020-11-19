@@ -1,5 +1,10 @@
 version: 0.2
 
+env:
+  shell: shell-tag
+  variables:
+    ARTIFACT_S3_BUCKET: "example-bucket"
+
 phases:
   install:
     commands:
@@ -8,9 +13,8 @@ phases:
   build:
     commands:
       - npm run build
-
+      - sam package --template-file template.yml --s3-bucket ${ARTIFACT_S3_BUCKET} --output-template-file packaged-template.yml
 artifacts:
   files:
-    - 'build/**/*'
-    - template.yaml
+    - 'packaged-template.yml'
   base-directory: 'helloWorldExample'

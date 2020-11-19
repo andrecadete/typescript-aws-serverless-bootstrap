@@ -36,6 +36,6 @@ to build Typescript based lambda function stacks.
 ### Deploy it
 
 You can deploy the usual SAM CLI way:  
-`sam deploy --s3-bucket BUCKET_NAME --stack-name STACK_NAME`  
+`sam deploy --s3-bucket BUCKET_NAME --stack-name STACK_NAME --profile AWS_PROFILE --region AWS_REGION`  
 Where BUCKET_NAME is the bucket you wish to store the packaged stack in and STACK_NAME is the CloudFormation unique stack name.  
 For more deployment flags like setting CloudFormation parameters with `--parameter-overrides` please refer to the [official AWS Docs relevant section](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html).

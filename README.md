@@ -39,3 +39,22 @@ You can deploy the usual SAM CLI way:
 `sam deploy --s3-bucket BUCKET_NAME --stack-name STACK_NAME --profile AWS_PROFILE --region AWS_REGION --capabilities CAPABILITY_IAM`  
 Where BUCKET_NAME is the bucket you wish to store the packaged stack in and STACK_NAME is the CloudFormation unique stack name.  
 For more deployment flags like setting CloudFormation parameters with `--parameter-overrides` please refer to the [official AWS Docs relevant section](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html).
+
+
+### Notes
+- For CORS, a basic configuration is present in the example template.  
+  This is not enough for Lambda Proxy integrations (default) as Proxy integration responses can't be changed on Gateway level.
+  It will merely add the OPTIONS requests for those endpoints.  
+  For headers that you want to see returned by the main methods (GET, POST, etc), you need to make sure the lambda function adds it in it's reponse.  
+  Example:  
+    ```
+    const response = {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST,GET"
+        },
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    ```

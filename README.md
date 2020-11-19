@@ -48,7 +48,7 @@ For more deployment flags like setting CloudFormation parameters with `--paramet
 You can setup a pipeline in CodePipelines.
     - Source step: to use this repository as source you'll probably have to use Custom Source Actions in CodePipelines. If you prefer to use Github "(Version 1)"/"(Version 2)" as Source, feel free to fork this repository into your own github account.
     - Build step: You can use the provided buildspec.yml in the stack folder (helloWorldExample/) and edit it as you wish. All it does is install npm dependencies, run `npm run build` and package it to S3 using SAM CLI. You need to pass the environment variable ARTIFACT_S3_BUCKET from CodePipelines to codebuild (or directly in CodeBuild) and ensure the Service Role used for CodeBuild has permissions to store the artifacts in that bucket.
-    - Deploy step: You can simply use the exported artifact and deploy it using Cloudformation integration in CodePipelines. You must ensure the Role passed from CodePipelines to CloudFormation has enough permissions to deploy the Lambda functions and API Gateway (or any other services you add to the stack).
+    - Deploy step: You can simply use the exported artifact and deploy it using Cloudformation integration in CodePipelines. You must ensure the Role passed from CodePipelines to CloudFormation has enough permissions to deploy/delete the Lambda functions, API Gateway and IAM Roles (create/delete, attach/detach) (or any other services you add to the stack).
 
 ### Notes
 - For CORS, a basic configuration is present in the example template.  

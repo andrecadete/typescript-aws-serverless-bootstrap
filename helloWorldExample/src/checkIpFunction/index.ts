@@ -1,5 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import * as http from 'typed-rest-client/HttpClient';
+import { IpChecker } from 'crypto2cash-typescript-package-example';
 
 export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
     const url = 'http://checkip.amazonaws.com/';
@@ -8,12 +9,13 @@ export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayPr
     try {
         // http call example
         const httpClient: http.HttpClient = new http.HttpClient(undefined);
-        const httpResponse = (await httpClient.get(url));
-        const myIp = (await httpResponse.readBody()).replace(/\n/g, '');
+        const ipChecker = new IpChecker(httpClient);
+        const ipAddress = await ipChecker.check();
+
         response = {
             statusCode: 200,
             body: JSON.stringify({
-                ipAddress: myIp,
+                ipAddress: ipAddress.trim(),
             }),
             headers: {
                 'Content-Type': 'application/json'

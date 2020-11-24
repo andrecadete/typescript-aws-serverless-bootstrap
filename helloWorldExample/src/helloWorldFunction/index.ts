@@ -1,13 +1,16 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { Greeter } from 'crypto2cash-typescript-package-example';
 
 export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
 
     let response;
+    const greeter = new Greeter();
+
     try {
         response = {
             statusCode: 200,
             body: JSON.stringify({
-                message: 'hello world',
+                message: greeter.greet('World'),
             }),
             headers: {
                 'Content-Type': 'application/json'
